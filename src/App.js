@@ -8,23 +8,26 @@ class App extends Component {
     super()
     this.state = {
       text: "Hello World",
-      color: "#ff9966"
+      color: "#ff9966",
+      fontSize: 48
     }
     this.handleTextChange = this.handleTextChange.bind(this)
     this.downloadSVGFile = this.downloadSVGFile.bind(this)
     this.showSVGCode = this.showSVGCode.bind(this)
+    this.handleFontSizeChange = this.handleFontSizeChange.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
   }
 
   renderCanvas() {
-    const { text, color } = this.state;
-    const ctx = new C2S(1000, 500);
-    ctx.fillStyle = `${color}`;
-    ctx.font = "48px Pacifico";
-    ctx.fillText(`${text}`, 10, 50);
+    const { text, color, fontSize } = this.state;
+    const ctx = new C2S(1000, 200)
+    ctx.fillStyle = `${color}`
+    ctx.font = `${fontSize}px Pacifico`
+    ctx.fillText(`${text}`, 10, 100)
 
     // var mySerializedSVG = ctx.getSerializedSvg(); //true here, if you need to convert named to numbered entities.
     //If you really need to you can access the shadow inline SVG created by calling:
-    var svg = ctx.getSvg();
+    var svg = ctx.getSvg()
     return svg
   }
 
@@ -36,6 +39,11 @@ class App extends Component {
   handleColorChange(colorObj, event) {
     const color = colorObj.hex
     this.setState({ color })
+  }
+
+  handleFontSizeChange(e) {
+    const fontSize = e.target.value || 0
+    this.setState({ fontSize })
   }
 
   renderSvg() {
@@ -54,22 +62,23 @@ class App extends Component {
 
   // Lifecycle hooks
   componentDidUpdate() {
-    this.renderSvg();
+    this.renderSvg()
   }
 
   componentDidMount() {
-    this.renderSvg();
+    this.renderSvg()
   }
 
   render() {
     return (
       <div>
         <div ref="svgContainer"></div>
-        <input type="text" value={this.state.text} onChange={this.handleTextChange.bind(this)} />
+        <input type="text" value={this.state.text} onChange={this.handleTextChange} />
         <ChromePicker
           color={this.state.color}
-          onChangeComplete={this.handleColorChange.bind(this)}
+          onChangeComplete={this.handleColorChange}
         />
+        <input type="number" value={this.state.fontSize} onChange={this.handleFontSizeChange} />
         <button onClick={this.downloadSVGFile}>Download File</button>
         <button onClick={this.showSVGCode}>Show SVG code</button>
       </div>
