@@ -1,20 +1,24 @@
 import React, { Component } from 'react';
-import C2S from './vendor/canvas2svg'
+import C2S from './vendor/canvas2svg';
+import { ChromePicker } from 'react-color';
 import './App.css';
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      text: "Hello World"
+      text: "Hello World",
+      color: "#ff9966"
     }
-    this.handleChange = this.handleChange.bind(this)
+    this.handleTextChange = this.handleTextChange.bind(this)
+    this.downloadSVGFile = this.downloadSVGFile.bind(this)
+    this.showSVGCode = this.showSVGCode.bind(this)
   }
 
   renderCanvas() {
-    const text = this.state.text;
+    const { text, color } = this.state;
     const ctx = new C2S(1000, 500);
-    ctx.fillStyle = "red";
+    ctx.fillStyle = `${color}`;
     ctx.font = "48px Pacifico";
     ctx.fillText(`${text}`, 10, 50);
 
@@ -24,9 +28,14 @@ class App extends Component {
     return svg
   }
 
-  handleChange(e) {
+  handleTextChange(e) {
     const text = e.target.value
     this.setState({ text })
+  }
+
+  handleColorChange(colorObj, event) {
+    const color = colorObj.hex
+    this.setState({ color })
   }
 
   renderSvg() {
@@ -35,7 +44,16 @@ class App extends Component {
     this.refs.svgContainer.appendChild(svg)
   }
 
-  componentDidUpdate () {
+  downloadSVGFile() {
+    console.log('call download')
+  }
+
+  showSVGCode() {
+    console.log('show showSVGCode')
+  }
+
+  // Lifecycle hooks
+  componentDidUpdate() {
     this.renderSvg();
   }
 
@@ -47,7 +65,13 @@ class App extends Component {
     return (
       <div>
         <div ref="svgContainer"></div>
-        <input type="text" value={this.state.text} onChange={this.handleChange.bind(this)} />
+        <input type="text" value={this.state.text} onChange={this.handleTextChange.bind(this)} />
+        <ChromePicker
+          color={this.state.color}
+          onChangeComplete={this.handleColorChange.bind(this)}
+        />
+        <button onClick={this.downloadSVGFile}>Download File</button>
+        <button onClick={this.showSVGCode}>Show SVG code</button>
       </div>
     );
   }
