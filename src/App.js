@@ -1,6 +1,12 @@
-import React, { Component } from 'react';
-import C2S from './vendor/canvas2svg';
-import { ChromePicker } from 'react-color';
+import React, { Component } from 'react'
+import { ChromePicker } from 'react-color'
+import { Input, Button, Icon } from 'semantic-ui-react'
+import WebFont from 'webfontloader'
+import C2S from './vendor/canvas2svg'
+import GoogleFontApi from './GoogleFontApi'
+import 'semantic-ui-css/semantic.min.css'
+import { debounce } from "./helpers";
+
 import './App.css';
 
 class App extends Component {
@@ -8,31 +14,32 @@ class App extends Component {
     super()
     this.state = {
       text: "Hello World",
-      color: "#ff9966",
+      color: "#D700EA",
+      fontFamily: 'Berkshire Swash',
       fontSize: 48
     }
-    this.handleTextChange = this.handleTextChange.bind(this)
-    this.downloadSVGFile = this.downloadSVGFile.bind(this)
-    this.showSVGCode = this.showSVGCode.bind(this)
-    this.handleFontSizeChange = this.handleFontSizeChange.bind(this)
-    this.handleColorChange = this.handleColorChange.bind(this)
+    
+    this._debounceTextChange = debounce(this._debounceTextChange, 400);
   }
 
-  renderCanvas() {
-    const { text, color, fontSize } = this.state;
+  // Private
+  _renderCanvas() {
+    const { text, color, fontSize, fontFamily } = this.state;
     const ctx = new C2S(1000, 200)
     ctx.fillStyle = `${color}`
-    ctx.font = `${fontSize}px Pacifico`
+    ctx.font = `${fontSize}px ${fontFamily}`
     ctx.fillText(`${text}`, 10, 100)
 
-    // var mySerializedSVG = ctx.getSerializedSvg(); //true here, if you need to convert named to numbered entities.
-    //If you really need to you can access the shadow inline SVG created by calling:
     var svg = ctx.getSvg()
     return svg
   }
 
+  // Binded
   handleTextChange(e) {
-    const text = e.target.value
+    this._debounceTextChange(e.target.value)
+  }
+  
+  _debounceTextChange(text){
     this.setState({ text })
   }
 
@@ -46,8 +53,21 @@ class App extends Component {
     this.setState({ fontSize })
   }
 
+  changeFont(fontFamilyObj) {
+    console.log( this.WebFontConfig)
+    WebFont.load({
+      google: {
+        families: [fontFamilyObj.text]
+      },
+      active: () => {
+        this.setState({ fontFamily: fontFamilyObj.text })
+      }
+    });
+  }
+
   renderSvg() {
-    const svg = this.renderCanvas()
+    console.log('ajkfgasdhfasf')
+    const svg = this._renderCanvas()
     this.refs.svgContainer.innerHTML = ''
     this.refs.svgContainer.appendChild(svg)
   }
@@ -62,7 +82,7 @@ class App extends Component {
 
   // Lifecycle hooks
   componentDidUpdate() {
-    this.renderSvg()
+    this.renderSvg();
   }
 
   componentDidMount() {
@@ -73,14 +93,27 @@ class App extends Component {
     return (
       <div>
         <div ref="svgContainer"></div>
-        <input type="text" value={this.state.text} onChange={this.handleTextChange} />
-        <ChromePicker
+        <Input 
+          type="text"
+          // icon="write"
+          icon="keyboard"
+          placeholder="Enter Text"
+          // value={this.state.text} 
+          onChange={this.handleTextChange.bind(this)} />
+        {/* <ChromePicker
           color={this.state.color}
-          onChangeComplete={this.handleColorChange}
-        />
-        <input type="number" value={this.state.fontSize} onChange={this.handleFontSizeChange} />
-        <button onClick={this.downloadSVGFile}>Download File</button>
-        <button onClick={this.showSVGCode}>Show SVG code</button>
+          onChangeComplete={this.handleColorChange.bind(this)}/> */}
+        <Input 
+          type="number"
+          icon="text height"
+          width= "50px"
+          placeholder='Font Size'
+          value={this.state.fontSize} 
+          onChange={this.handleFontSizeChange.bind(this)} />
+        <Button icon color="pink" onClick={this.downloadSVGFile.bind(this)} ><Icon name='tint' /></Button>
+        <Button icon color="blue" onClick={this.downloadSVGFile.bind(this)} ><Icon name='download' /></Button>
+        <Button icon color="teal" onClick={this.showSVGCode.bind(this)}><Icon name='code' /></Button>
+        <GoogleFontApi changeFont={this.changeFont.bind(this)}/>
       </div>
     );
   }

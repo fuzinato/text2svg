@@ -6,7 +6,12 @@
     "react": "^16.1.1",
     "react-color": "^2.13.8",
     "react-dom": "^16.1.1",
-    "react-scripts": "1.0.17"
+    "react-scripts": "1.0.17",
+    "semantic-ui-css": "^2.2.12",
+    "semantic-ui-react": "^0.76.0",
+    "throttle-debounce": "^1.0.1",
+    "webfontloader": "^1.6.28",
+    "whatwg-fetch": "^2.0.3"
   },
   "scripts": {
     "start": "react-scripts start",
