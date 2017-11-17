@@ -15,9 +15,9 @@ class App extends Component {
     this.state = {
       text: "Hello World",
       color: "#D700EA",
-      fontFamily: 'Berkshire Swash',
+      fontFamily: "Berkshire Swash",
       fontSize: 48,
-      pickerVisible: false
+      isPickerVisible: false
     }
     
     this._debounceTextChange = debounce(this._debounceTextChange, 400);
@@ -54,13 +54,13 @@ class App extends Component {
     this.setState({ fontSize })
   }
 
-  changeFont(fontFamilyObj) {
+  changeFont(fontFamily) {
     WebFont.load({
       google: {
-        families: [fontFamilyObj.key]
+        families: [fontFamily]
       },
       active: () => {
-        this.setState({ fontFamily: fontFamilyObj.key })
+        this.setState({ fontFamily: fontFamily })
       }
     });
   }
@@ -79,6 +79,11 @@ class App extends Component {
     console.log('show showSVGCode')
   }
 
+  showColorPicker() {
+    console.log(this.state.isPickerVisible)
+    this.setState({isPickerVisible: !this.state.isPickerVisible})
+  }
+
   // Lifecycle hooks
   componentDidUpdate() {
     this.renderSvg();
@@ -92,27 +97,34 @@ class App extends Component {
     return (
       <div>
         <div ref="svgContainer"></div>
+        {/* Text input */}
         <Input 
           type="text"
-          // icon="write"
           icon="keyboard"
           placeholder="Enter Text"
-          // value={this.state.text} 
+          defaultValue={this.state.text}
           onChange={this.handleTextChange.bind(this)} />
-        {/* <ChromePicker
+        {/* Color Picker */}
+        <ChromePicker
           color={this.state.color}
-          onChangeComplete={this.handleColorChange.bind(this)}/> */}
+          className="color-picker"
+          className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}
+          onChangeComplete={this.handleColorChange.bind(this)}/> 
+        {/* Font Size */}
         <Input 
           type="number"
-          icon="text height"
           width= "50px"
+          icon="text height"
           placeholder='Font Size'
           value={this.state.fontSize} 
           onChange={this.handleFontSizeChange.bind(this)} />
-        <Button icon color="pink" onClick={this.downloadSVGFile.bind(this)} ><Icon name='tint' /></Button>
+        <Button icon color="pink" onClick={this.showColorPicker.bind(this)} ><Icon name='tint' /></Button>
         <Button icon color="blue" onClick={this.downloadSVGFile.bind(this)} ><Icon name='download' /></Button>
         <Button icon color="teal" onClick={this.showSVGCode.bind(this)}><Icon name='code' /></Button>
-        <GoogleFontApi changeFont={this.changeFont.bind(this)}/>
+        {/* Font Family and Style */}
+        <GoogleFontApi 
+          changeFont={this.changeFont.bind(this) }
+          defaultFont={this.state.fontFamily}/>
 
       </div>
     );
