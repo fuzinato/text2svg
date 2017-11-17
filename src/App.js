@@ -16,7 +16,8 @@ class App extends Component {
       text: "Hello World",
       color: "#D700EA",
       fontFamily: 'Berkshire Swash',
-      fontSize: 48
+      fontSize: 48,
+      pickerVisible: false
     }
     
     this._debounceTextChange = debounce(this._debounceTextChange, 400);
@@ -112,6 +113,7 @@ class App extends Component {
         <Button icon color="blue" onClick={this.downloadSVGFile.bind(this)} ><Icon name='download' /></Button>
         <Button icon color="teal" onClick={this.showSVGCode.bind(this)}><Icon name='code' /></Button>
         <GoogleFontApi changeFont={this.changeFont.bind(this)}/>
+
       </div>
     );
   }
