@@ -39,8 +39,8 @@ class App extends Component {
     this._debounceTextChange(e.target.value)
   }
   
-  _debounceTextChange(text){
-    this.setState({ text })
+  _debounceTextChange(key){
+    this.setState({ key })
   }
 
   handleColorChange(colorObj, event) {
@@ -54,19 +54,17 @@ class App extends Component {
   }
 
   changeFont(fontFamilyObj) {
-    console.log( this.WebFontConfig)
     WebFont.load({
       google: {
-        families: [fontFamilyObj.text]
+        families: [fontFamilyObj.key]
       },
       active: () => {
-        this.setState({ fontFamily: fontFamilyObj.text })
+        this.setState({ fontFamily: fontFamilyObj.key })
       }
     });
   }
 
   renderSvg() {
-    console.log('ajkfgasdhfasf')
     const svg = this._renderCanvas()
     this.refs.svgContainer.innerHTML = ''
     this.refs.svgContainer.appendChild(svg)
