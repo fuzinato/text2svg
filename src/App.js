@@ -43,8 +43,8 @@ class App extends Component {
     this._debounceTextChange(e.target.value)
   }
   
-  _debounceTextChange(key){
-    this.setState({ key })
+  _debounceTextChange(text){
+    this.setState({ text })
   }
 
   handleColorChange(colorObj, event) {
@@ -58,7 +58,6 @@ class App extends Component {
   }
 
   changeFont(fontFamily, variants) {
-    console.log(fontFamily)
     WebFont.load({
       google: {
         families: [fontFamily]
@@ -110,9 +109,8 @@ class App extends Component {
       <div>
         <div ref="svgContainer"></div>
         {/* Text input */}
-        <Input 
+        <input 
           type="text"
-          icon="keyboard"
           placeholder="Enter Text"
           defaultValue={this.state.text}
           onChange={this.handleTextChange.bind(this)} />
@@ -123,10 +121,8 @@ class App extends Component {
           className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}
           onChangeComplete={this.handleColorChange.bind(this)}/> 
         {/* Font Size */}
-        <Input 
+        <input 
           type="number"
-          width= "50px"
-          icon="text height"
           placeholder='Font Size'
           value={this.state.fontSize} 
           onChange={this.handleFontSizeChange.bind(this)} />
