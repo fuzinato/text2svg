@@ -71,10 +71,17 @@ class App extends Component {
         this.setState({ fontFamily, variants })
       }
     });
+
+    // Change to default
+    this.setState({
+      fontVariant: "regular",
+      fontStyle: "normal",
+      fontWeight: 400
+    })
   }
 
-  getFVD(fontDescription) {
-    const flags = /(\d+)?(\D+)?/g.exec(fontDescription)
+  getFVD(fontVariant) {
+    const flags = /(\d+)?(\D+)?/g.exec(fontVariant)
     const fontWeightRgx = flags[1]
     const fontStyleRgx = flags[2]
     let fontWeight, 
@@ -97,13 +104,14 @@ class App extends Component {
     return fvd
   }
 
-  changeStyle(fontStyle) {
-    const fvd = this.getFVD(fontStyle)
+  changeStyle(fontVariant) {
+    const fvd = this.getFVD(fontVariant)
     WebFont.load({
       google: {
         families: [`${this.state.fontFamily}:${fvd}`]
       }
     });
+    this.setState({fontVariant})
   }
 
   renderSvg() {
