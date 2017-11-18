@@ -1,9 +1,10 @@
 import React, { Component } from 'react'
 import { ChromePicker } from 'react-color'
-import { Input, Button, Icon } from 'semantic-ui-react'
+import { Input, Button, Icon, Dropdown } from 'semantic-ui-react'
 import WebFont from 'webfontloader'
 import C2S from './vendor/canvas2svg'
-import GoogleFontApi from './GoogleFontApi'
+import FontFamilySelect from './FontFamilySelect'
+import FontStyleSelect from './FontStyleSelect'
 import 'semantic-ui-css/semantic.min.css'
 import { debounce } from "./helpers";
 
@@ -16,6 +17,8 @@ class App extends Component {
       text: "Hello World",
       color: "#D700EA",
       fontFamily: "Berkshire Swash",
+      variants: ["regular"],
+      fontStyle: "regular",
       fontSize: 48,
       isPickerVisible: false
     }
@@ -54,15 +57,20 @@ class App extends Component {
     this.setState({ fontSize })
   }
 
-  changeFont(fontFamily) {
+  changeFont(fontFamily, variants) {
+    console.log(fontFamily)
     WebFont.load({
       google: {
         families: [fontFamily]
       },
       active: () => {
-        this.setState({ fontFamily: fontFamily })
+        this.setState({ fontFamily, variants })
       }
     });
+  }
+
+  changeStyle(fontStyle) {
+    this.setState({ fontStyle })
   }
 
   renderSvg() {
@@ -94,6 +102,10 @@ class App extends Component {
   }
 
   render() {
+
+    const variantsOpts = this.state.variants.map((variant) => {
+      return { text: variant, value: variant }
+    });
     return (
       <div>
         <div ref="svgContainer"></div>
@@ -121,10 +133,15 @@ class App extends Component {
         <Button icon color="pink" onClick={this.showColorPicker.bind(this)} ><Icon name='tint' /></Button>
         <Button icon color="blue" onClick={this.downloadSVGFile.bind(this)} ><Icon name='download' /></Button>
         <Button icon color="teal" onClick={this.showSVGCode.bind(this)}><Icon name='code' /></Button>
-        {/* Font Family and Style */}
-        <GoogleFontApi 
-          changeFont={this.changeFont.bind(this) }
-          defaultFont={this.state.fontFamily}/>
+        {/* Font Family */}
+        <FontFamilySelect 
+          changeFont={this.changeFont.bind(this)}
+          fontFamily={this.state.fontFamily}/>
+        {/* Font Style */}
+        <FontStyleSelect
+          variants={this.state.variants}
+          fontStyle={this.state.fontStyle}
+          changeStyle={this.changeStyle.bind(this)}/>
 
       </div>
     );
