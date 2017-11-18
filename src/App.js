@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ChromePicker } from 'react-color'
-import { Input, Button, Icon, Dropdown } from 'semantic-ui-react'
+import {  Button, Icon } from 'semantic-ui-react'
 import WebFont from 'webfontloader'
 import C2S from './vendor/canvas2svg'
 import FontFamilySelect from './FontFamilySelect'
@@ -18,7 +18,9 @@ class App extends Component {
       color: "#D700EA",
       fontFamily: "Berkshire Swash",
       variants: ["regular"],
-      fontStyle: "regular",
+      fontVariant: "regular",
+      fontStyle: "normal",
+      fontWeight: 400,
       fontSize: 48,
       isPickerVisible: false
     }
@@ -28,11 +30,14 @@ class App extends Component {
 
   // Private
   _renderCanvas() {
-    const { text, color, fontSize, fontFamily } = this.state;
+    const { text, color, fontSize, fontFamily, fontStyle, fontWeight} = this.state;
     const ctx = new C2S(1000, 200)
+
     ctx.fillStyle = `${color}`
-    ctx.font = `${fontSize}px ${fontFamily}`
+    ctx.font = `${fontStyle} normal ${fontWeight} ${fontSize}px ${fontFamily}`
     ctx.fillText(`${text}`, 10, 100)
+
+    // TODO add stroke
 
     var svg = ctx.getSvg()
     return svg
@@ -68,8 +73,37 @@ class App extends Component {
     });
   }
 
+  getFVD(fontDescription) {
+    const flags = /(\d+)?(\D+)?/g.exec(fontDescription)
+    const fontWeightRgx = flags[1]
+    const fontStyleRgx = flags[2]
+    let fontWeight, 
+        fontStyle = "normal", 
+        fvd = "";
+
+    if (fontWeightRgx && fontWeightRgx !== "regular"){
+      fontWeight = parseInt(fontWeightRgx, 10)
+    } else {
+      fontWeight = "400"
+    }
+    fvd += fontWeight
+
+    if (fontStyleRgx === "italic") {
+      fontStyle = fontStyleRgx
+      fvd += "i"
+    }
+
+    this.setState({ fontWeight, fontStyle })
+    return fvd
+  }
+
   changeStyle(fontStyle) {
-    this.setState({ fontStyle })
+    const fvd = this.getFVD(fontStyle)
+    WebFont.load({
+      google: {
+        families: [`${this.state.fontFamily}:${fvd}`]
+      }
+    });
   }
 
   renderSvg() {
@@ -136,7 +170,7 @@ class App extends Component {
         {/* Font Style */}
         <FontStyleSelect
           variants={this.state.variants}
-          fontStyle={this.state.fontStyle}
+          fontVariant={this.state.fontVariant}
           changeStyle={this.changeStyle.bind(this)}/>
 
       </div>

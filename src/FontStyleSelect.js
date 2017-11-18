@@ -9,9 +9,9 @@ class FontStyleSelect extends React.Component{
 
   render(){
     return(
-        <select onChange={this.handleChange.bind(this)} value={this.props.fontStyle}>
-          {this.props.variants.map((item) => <option key={item} value={item}>{item}</option>)}
-        </select>
+      <select onChange={this.handleChange.bind(this)} value={this.props.fontVariant}>
+        {this.props.variants.map((item) => <option key={item} value={item}>{item}</option>)}
+      </select>
     )
   }
 }
