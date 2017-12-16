@@ -7,6 +7,7 @@ import FontFamilySelect from './FontFamilySelect'
 import FontStyleSelect from './FontStyleSelect'
 import 'semantic-ui-css/semantic.min.css'
 import { debounce } from "./helpers";
+import Menu from './components/Menu'
 
 import './App.css';
 
@@ -151,6 +152,7 @@ class App extends Component {
       <div>
         <div ref="svgContainer"></div>
         {/* Text input */}
+        <Menu />
         <input 
           type="text"
           placeholder="Enter Text"
