@@ -5,49 +5,66 @@ const Menu = () => {
   return (
     <div class="menu">
       <Popup
-        trigger={<Button icon='compose'  size='huge' />}
+        trigger={<Button icon> <Icon name='compose' size='big' />
+        <span>Edit</span>
+      </Button>}
         content='Add users to your feed'
         position='top left'
       />
       <Popup
-        trigger={<Button icon='text height' size='huge' />}
+        trigger={<Button icon> <Icon name='text height' size='big' />
+        <span>Text Height</span>
+      </Button>}
         content='Add users to your feed'
         position='top center'
       />
       <Popup
-      trigger={<Button icon><Icon name='tint' color='purple' size='large'/></Button>}
-      content='Add users to your feed'
-      position='top center'
-    />
+        trigger={
+          <Button icon><Icon name='tint' color='purple' size='big' />
+            <span>Color</span>
+          </Button>}
+        content='Add users to your feed'
+        position='top center'
+      />
       <Popup
-        trigger={<Button icon='code' size='huge' />}
+        trigger={<Button icon><Icon name='code' size='big' />
+        <span>SVG Code</span>
+      </Button>}
         content='Add users to your feed'
         position='top right'
       />
 
       <Popup
-        trigger={<Button icon='book' size='huge' />}
+        trigger={<Button icon><Icon name='book' size='big' />
+        <span>Font Family</span>
+      </Button>}
         content='Add users to your feed'
         position='bottom left'
       />
 
       <Popup
-        trigger={<Button icon='italic' size='huge' />}
+        trigger={<Button icon><Icon name='italic' size='big' />
+        <span>Font Style</span>
+      </Button>}
         content='Add users to your feed'
         position='bottom center'
       />
 
       <Popup
-        trigger={<Button icon='crop' size='huge' />}
+        trigger={<Button icon><Icon name='crop' size='big' />
+        <span>Crop</span>
+      </Button>}
         content='Add users to your feed'
         position='bottom center'
       />
       <Popup
-        trigger={<Button icon='download' size='huge' />}
+        trigger={<Button icon><Icon name='download' size='big' />
+        <span>Download</span>
+      </Button>}
         content='Add users to your feed'
         position='bottom right'
       />
-    
+
 
     </div>
   )
