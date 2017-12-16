@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
 import { ChromePicker } from 'react-color'
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon, Input} from 'semantic-ui-react'
 import WebFont from 'webfontloader'
 import C2S from './vendor/canvas2svg'
 import FontFamilySelect from './FontFamilySelect'
 import FontStyleSelect from './FontStyleSelect'
-import 'semantic-ui-css/semantic.min.css'
 import { debounce } from "./helpers";
 import Menu from './components/Menu'
+import 'semantic-ui-css/semantic.min.css'
 
 import './App.css';
 
@@ -153,11 +153,17 @@ class App extends Component {
         <div ref={(el) => { this.svgContainer = el }}></div>
         {/* Text input */}
         <Menu />
-        <input
+        <Input 
+        size='massive' 
+        icon='compose' 
+        placeholder='Enter text...'
+        defaultValue={this.state.text}
+        onChange={this.handleTextChange.bind(this)} />
+        {/*<input
           type="text"
           placeholder="Enter Text"
           defaultValue={this.state.text}
-          onChange={this.handleTextChange.bind(this)} />
+    onChange={this.handleTextChange.bind(this)} /> */}
         {/* Color Picker */}
         <ChromePicker
           color={this.state.color}
@@ -165,11 +171,20 @@ class App extends Component {
           className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}
           onChangeComplete={this.handleColorChange.bind(this)} />
         {/* Font Size */}
-        <input
+
+        <Input
+        type="number"
+        size='massive' 
+        icon='text height' 
+        placeholder='Font Size...'
+        value={this.state.fontSize}
+        style={{width:"190px", textAlign: "center"}}
+        onChange={this.handleFontSizeChange.bind(this)}/>
+        {/*<input
           type="number"
           placeholder='Font Size'
           value={this.state.fontSize}
-          onChange={this.handleFontSizeChange.bind(this)} />
+          onChange={this.handleFontSizeChange.bind(this)} />*/}
         <Button icon color="pink" onClick={this.showColorPicker.bind(this)} ><Icon name='tint' /></Button>
         <Button icon color="blue" onClick={this.downloadSVGFile.bind(this)} ><Icon name='download' /></Button>
         <Button icon color="teal" onClick={this.showSVGCode.bind(this)}><Icon name='code' /></Button>
