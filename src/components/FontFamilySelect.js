@@ -50,9 +50,12 @@ class FontFamilySelect extends React.Component {
     }
 
     return (
-      <select onChange={this.handleChange.bind(this)} value={this.props.fontFamily}>
-        {this.familyList.map((item) => <option key={item.value} value={item.value}>{item.value}</option>)}
-      </select>
+      <div className="input-section">
+        <span>Font Family</span>
+        <select onChange={this.handleChange.bind(this)} value={this.props.fontFamily}>
+          {this.familyList.map((item) => <option key={item.value} value={item.value}>{item.value}</option>)}
+        </select>
+      </div>
     )
   }
 }
