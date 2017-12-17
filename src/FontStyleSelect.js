@@ -2,15 +2,17 @@ import React from 'react'
 import 'whatwg-fetch'
 
 
-class FontStyleSelect extends React.Component{
+class FontStyleSelect extends React.Component {
   handleChange(e) {
     this.props.changeStyle(e.target.value)
   }
 
-  render(){
-    return(
+  render() {
+    return (
       <select onChange={this.handleChange.bind(this)} value={this.props.fontVariant}>
-        {this.props.variants.map((item) => <option key={item} value={item}>{item}</option>)}
+        {this.props.variants.map((item) =>
+          <option key={item} value={item}>{item}</option>
+        )}
       </select>
     )
   }

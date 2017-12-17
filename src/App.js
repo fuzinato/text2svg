@@ -1,6 +1,6 @@
 import React, { Component } from 'react'
 import { ChromePicker } from 'react-color'
-import { Button, Icon, Input} from 'semantic-ui-react'
+import { Button, Icon, Input } from 'semantic-ui-react'
 import WebFont from 'webfontloader'
 import C2S from './vendor/canvas2svg'
 import FontFamilySelect from './FontFamilySelect'
@@ -26,7 +26,15 @@ class App extends Component {
       isPickerVisible: false
     }
 
-    this._debounceTextChange = debounce(this._debounceTextChange, 400);
+    this._debounceTextChange = debounce(this._debounceTextChange, 400)
+    this.handleTextChange = this.handleTextChange.bind(this)
+    this.handleFontSizeChange = this.handleFontSizeChange.bind(this)
+    this.handleColorChange = this.handleColorChange.bind(this)
+    this.showColorPicker = this.showColorPicker.bind(this)
+    this.changeFont = this.changeFont.bind(this)
+    this.changeStyle = this.changeStyle.bind(this)
+    this.downloadSVGFile = this.downloadSVGFile.bind(this)
+    this.showSVGCode = this.showSVGCode.bind(this)
   }
 
   // Private
@@ -151,54 +159,59 @@ class App extends Component {
     return (
       <div className="app">
         <div ref={(el) => { this.svgContainer = el }}></div>
+        {/* <Menu /> */}
+
         {/* Text input */}
-        <Menu />
-        <Input 
-        size='massive' 
-        icon='compose' 
-        placeholder='Enter text...'
-        defaultValue={this.state.text}
-        onChange={this.handleTextChange.bind(this)} />
-        {/*<input
-          type="text"
-          placeholder="Enter Text"
-          defaultValue={this.state.text}
-    onChange={this.handleTextChange.bind(this)} /> */}
-        {/* Color Picker */}
-        <ChromePicker
-          color={this.state.color}
-          className="color-picker"
-          className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}
-          onChangeComplete={this.handleColorChange.bind(this)} />
+        <div className="input-section">
+          <span>Text</span>
+          <input
+            type="text"
+            placeholder="Enter Text"
+            defaultValue={this.state.text}
+            onChange={this.handleTextChange} />
+        </div>
         {/* Font Size */}
 
-        <Input
-        type="number"
-        size='massive' 
-        icon='text height' 
-        placeholder='Font Size...'
-        value={this.state.fontSize}
-        style={{width:"190px", textAlign: "center"}}
-        onChange={this.handleFontSizeChange.bind(this)}/>
-        {/*<input
-          type="number"
-          placeholder='Font Size'
-          value={this.state.fontSize}
-          onChange={this.handleFontSizeChange.bind(this)} />*/}
-        <Button icon color="pink" onClick={this.showColorPicker.bind(this)} ><Icon name='tint' /></Button>
-        <Button icon color="blue" onClick={this.downloadSVGFile.bind(this)} ><Icon name='download' /></Button>
-        <Button icon color="teal" onClick={this.showSVGCode.bind(this)}><Icon name='code' /></Button>
+        <div className="input-section b-font-size">
+          <span>Font Size</span>
+          <input
+            type="number"
+            placeholder='Font Size'
+            value={this.state.fontSize}
+            onChange={this.handleFontSizeChange} />
+        </div>
+        <div className="input-section">
+          {/* Color Picker */}
+          <ChromePicker
+            color={this.state.color}
+            className="color-picker"
+            className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}
+            onChangeComplete={this.handleColorChange} />
+          <span>Color</span>
+          <Button icon color="pink" onClick={this.showColorPicker} ><Icon name='tint' /></Button>
+        </div>
+
+
         {/* Font Family */}
-        <FontFamilySelect
-          changeFont={this.changeFont.bind(this)}
-          fontFamily={this.state.fontFamily} />
+        <div className="input-section">
+          <span>Font Family</span>
+          <FontFamilySelect
+            changeFont={this.changeFont}
+            fontFamily={this.state.fontFamily} />
+        </div>
         {/* Font Style */}
-        <FontStyleSelect
-          variants={this.state.variants}
-          fontVariant={this.state.fontVariant}
-          changeStyle={this.changeStyle.bind(this)} />
+        <div className="input-section">
+          <span>Font Style</span>
+          <FontStyleSelect
+            variants={this.state.variants}
+            fontVariant={this.state.fontVariant}
+            changeStyle={this.changeStyle} />
+        </div>
 
-
+        <div className="input-section">
+          <Button icon color="blue" onClick={this.downloadSVGFile} ><Icon name='download' /></Button>
+          <Button icon color="teal" onClick={this.showSVGCode}><Icon name='code' /></Button>
+        </div>
         <Button icon="github" />
         <Button icon="twitter" />
         <Button icon="share alternate" color="pink" />

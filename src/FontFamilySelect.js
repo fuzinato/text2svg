@@ -1,8 +1,8 @@
 import React from 'react'
 import 'whatwg-fetch'
 
-class FontFamilySelect extends React.Component{
-  constructor(){
+class FontFamilySelect extends React.Component {
+  constructor() {
     super()
 
     this.state = {
@@ -22,6 +22,7 @@ class FontFamilySelect extends React.Component{
       }).then((json) => {
         this.familyList = json.items.map((font) => {
           return {
+            text: font.family,
             value: font.family,
             variants: font.variants
           }
@@ -37,17 +38,18 @@ class FontFamilySelect extends React.Component{
   }
 
   handleChange(e) {
+    console.log(e)
     const selectedfontFamily = e.target.value;
     const variants = this.familyList[e.target.selectedIndex].variants
     this.props.changeFont(selectedfontFamily, variants)
   }
 
-  render(){
-    if(this.state.loading){
+  render() {
+    if (this.state.loading) {
       return null
     }
 
-    return(
+    return (
       <select onChange={this.handleChange.bind(this)} value={this.props.fontFamily}>
         {this.familyList.map((item) => <option key={item.value} value={item.value}>{item.value}</option>)}
       </select>

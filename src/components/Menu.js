@@ -3,7 +3,7 @@ import { Popup, Button, Icon } from 'semantic-ui-react'
 
 const Menu = () => {
   return (
-    <div class="menu">
+    <div className="menu">
       <Popup
         trigger={<Button icon> <Icon name='compose' size='big' />
         <span>Edit</span>

@@ -26,7 +26,7 @@ body {
   display: none;
 }
 
-.menu {
+.app .menu {
   width: 50vw;
   margin: 0 auto;
   display: grid;
@@ -34,14 +34,14 @@ body {
   grid-template-rows: 120px 120px;
 }
 
-.menu .ui.icon.button {
+.app .menu .ui.icon.button {
   padding: 0;
   margin: 1px;
   border-radius: 0;
   background-color: #fff;
   border: 1px solid #F1F3F8;
 
-  padding-top: 20%;
+  padding-top: 15%;
   display: flex;
   flex-direction: column;
   justify-content: center;
@@ -49,7 +49,40 @@ body {
   font-weight: normal;
 }
 
-.menu .ui.icon.button span {
+.app .menu .ui.icon.button .icon::before {
+  color: #6E83AD;
+}
+.app .menu .ui.icon.button span {
   margin-top: 30px;
   font-size: 12px;
+  color: #BCC6DA
+}
+
+input {
+  background: none;
+  color: #6E83AD;
+  font-size: 18px;
+  padding: 10px 10px 10px 5px;
+  /* display: block; */
+  width: 320px;
+  border: none;
+  border-radius: 0;
+  border-bottom: 1px solid #BCC6DA;
+}
+
+.input-section {
+  display: flex;
+  flex-direction: column;
+  align-items: baseline;
+  margin: 20px; 
+}
+
+.input-section > span {
+  font-size: 11px;
+  color: #BCC6DA;
+  text-transform: uppercase;
+}
+
+.b-font-size input {
+  width: 100px;
 }
