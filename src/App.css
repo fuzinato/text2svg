@@ -6,6 +6,7 @@ body {
   text-align: center;
   margin: 0 auto;
   min-height: 100vh;
+  width: 620px;
 }
 
 .svgContainer {
@@ -18,8 +19,9 @@ body {
 
 .chrome-picker {
   position: absolute;
-  top: 20px;
-  left: 0;
+  z-index: 2;
+  top: 0;
+  left: 60px;
 }
 
 .is-hidden{
@@ -50,7 +52,7 @@ body {
 }
 
 .app .menu .ui.icon.button .icon::before {
-  color: #6E83AD;
+  color: #4e5f82;
 }
 .app .menu .ui.icon.button span {
   margin-top: 30px;
@@ -60,7 +62,7 @@ body {
 
 input {
   background: none;
-  color: #6E83AD;
+  color: #4e5f82;
   font-size: 18px;
   padding: 10px 10px 10px 5px;
   /* display: block; */
@@ -72,17 +74,52 @@ input {
 
 .input-section {
   display: flex;
+  position: relative;
   flex-direction: column;
   align-items: baseline;
   margin: 20px; 
 }
 
 .input-section > span {
-  font-size: 11px;
+  font-size: 10px;
+  padding-left: 3px;
   color: #BCC6DA;
   text-transform: uppercase;
 }
 
 .b-font-size input {
   width: 100px;
+}
+
+.colorblock {
+  width: 40px;
+  height: 40px;
+  cursor: pointer;
+}
+
+.select select {
+  border: none;
+  border-bottom: 1px solid #BCC6DA;
+  color: #4e5f82;
+  background-color: #F9FAFC;
+  padding: 10px 10px 10px 0px;
+  font-size: 16px;
+}
+
+.select__family select{
+  width: 320px
+}
+.select__style select {
+  width: 100px;
+}
+
+.section__download {
+  display: flex;
+  flex-direction: row;
+  align-items: flex-end
+}
+/* GRID */
+.flex-row {
+  display: flex;
+  
 }

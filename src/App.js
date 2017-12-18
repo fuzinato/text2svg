@@ -150,15 +150,23 @@ class App extends Component {
       <div className="app">
         <div ref={(el) => { this.svgContainer = el }}></div>
 
-        <TextEdit onChange={this.handleTextChange} text={this.state.text} />
-        <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
-        <Colorpicker onChange={this.handleColorChange} />
-        <FontFamilySelect changeFont={this.changeFont} fontFamily={this.state.fontFamily} />
-        <FontStyleSelect variants={this.state.variants} fontVariant={this.state.fontVariant} onChange={this.changeStyle} />
+        <div className="flex-row">
+          <TextEdit onChange={this.handleTextChange} text={this.state.text} />
+          <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
+          <Colorpicker onChange={this.handleColorChange} />
+        </div>
+        <div className="flex-row">
+          <FontFamilySelect changeFont={this.changeFont} fontFamily={this.state.fontFamily} />
+          <FontStyleSelect variants={this.state.variants} fontVariant={this.state.fontVariant} onChange={this.changeStyle} />
 
-        <div className="input-section">
-          <Button icon color="blue" onClick={this.downloadSVGFile} ><Icon name='download' /></Button>
-          <Button icon color="teal" onClick={this.showSVGCode}><Icon name='code' /></Button>
+          <div className="input-section section__download">
+            <Button icon color="teal" onClick={this.showSVGCode}><Icon name='code' /></Button>
+            <Button icon color="blue" onClick={this.downloadSVGFile} ><Icon name='download' /></Button>
+          </div>
+        </div>
+        <div className="flex-row">
+        {/* canvas: width, height
+        text-position: x, y */}
         </div>
         <Button icon="github" />
         <Button icon="twitter" />
