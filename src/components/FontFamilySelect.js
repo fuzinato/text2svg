@@ -1,5 +1,5 @@
-import React from 'react'
-import 'whatwg-fetch'
+import React from "react"
+import "whatwg-fetch"
 
 class FontFamilySelect extends React.Component {
   constructor() {
@@ -13,8 +13,8 @@ class FontFamilySelect extends React.Component {
   }
 
   loadFontList() {
-    // const fontsListUrl = 'https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAqt_7eAMB_y6nsKZBvb56UaIuo6SidwKU'
-    const fontsListUrl = '../fonts.json'
+    // const fontsListUrl = "https://www.googleapis.com/webfonts/v1/webfonts?key=AIzaSyAqt_7eAMB_y6nsKZBvb56UaIuo6SidwKU"
+    const fontsListUrl = "../fonts.json"
 
     fetch(fontsListUrl)
       .then((response) => {
@@ -33,7 +33,7 @@ class FontFamilySelect extends React.Component {
         })
 
       }).catch((ex) => {
-        console.log('parsing failed', ex)
+        console.log("parsing failed", ex)
       })
   }
 
@@ -50,7 +50,7 @@ class FontFamilySelect extends React.Component {
     }
 
     return (
-      <div className='input-section select select__family'>
+      <div className="input-section family-select">
         <span>Font Family</span>
         <select onChange={this.handleChange.bind(this)} value={this.props.fontFamily}>
           {this.familyList.map((item) => <option key={item.value} value={item.value}>{item.value}</option>)}

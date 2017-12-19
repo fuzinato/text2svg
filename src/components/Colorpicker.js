@@ -57,7 +57,7 @@ export default class Colorpicker extends Component {
           color={this.state.color}
           className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}
           onChangeComplete={this.handleChange}  />
-        <span>Color</span>
+        <span>{this.props.title}</span>
         <div style={{backgroundColor: this.state.color}} className="colorblock" onClick={this.showColorPicker} ></div>
       </div>
     )

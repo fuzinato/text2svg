@@ -1,4 +1,4 @@
-import React from 'react'
+import React from "react"
 
 const FontStyleSelect = (props) => {
   function handleChange(e) {
@@ -6,7 +6,7 @@ const FontStyleSelect = (props) => {
   }
 
   return (
-    <div className='input-section select select__style'>
+    <div className="input-section">
       <span>Font Style</span>
       <select onChange={handleChange} value={props.fontVariant}>
         {props.variants.map((item) =>

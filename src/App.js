@@ -180,20 +180,33 @@ class App extends Component {
         <div className="svgContainer" ref={(el) => { this.svgContainer = el }}></div>
 
         <div className="flex-row">
-          <TextEdit onChange={this.handleTextChange} text={this.state.text} />
-          <Colorpicker onChange={this.handleColorChange} defaultValue="#D700EA" title="Text Color" />
-          <Colorpicker onChange={this.handleBgColorChange} title="Bg Color"/>
+          <div className="flex-row-2">
+            <TextEdit onChange={this.handleTextChange} text={this.state.text} />
+          </div>
+          <div className="flex-row-2">
+            <Colorpicker onChange={this.handleColorChange} title="Color" defaultValue="#D700EA" />
+            <Colorpicker onChange={this.handleBgColorChange} title="Bg Color" />
+          </div>
         </div>
         <div className="flex-row">
-          <FontFamilySelect changeFont={this.changeFont} fontFamily={this.state.fontFamily} />
-          <FontStyleSelect variants={this.state.variants} fontVariant={this.state.fontVariant} onChange={this.changeStyle} />
-          <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
+          <div className="flex-row-2">
+            <FontFamilySelect changeFont={this.changeFont} fontFamily={this.state.fontFamily} />
+          </div>
+          <div className="flex-row-2">
+            <FontStyleSelect variants={this.state.variants} fontVariant={this.state.fontVariant} onChange={this.changeStyle} />
+            <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
+          </div>
         </div>
         <div className="flex-row dimensions">
-          <Dimensions onChange={this.handleDimensionChange} title="Canvas Width" text={this.state.canvasW} measures="canvasW" />
-          <Dimensions onChange={this.handleDimensionChange} title="Canvas Height" text={this.state.canvasH} measures="canvasH" />
-          <Dimensions onChange={this.handleDimensionChange} title="Text X Position" text={this.state.textX} measures="textX" />
-          <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.textY} measures="textY" />
+          <div className="flex-row-2">
+            <Dimensions onChange={this.handleDimensionChange} title="Canvas Width" text={this.state.canvasW} measures="canvasW" />
+            <Dimensions onChange={this.handleDimensionChange} title="Canvas Height" text={this.state.canvasH} measures="canvasH" />
+          </div>
+          <div className="flex-row-2">
+
+            <Dimensions onChange={this.handleDimensionChange} title="Text X Position" text={this.state.textX} measures="textX" />
+            <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.textY} measures="textY" />
+          </div>
         </div>
         <div className="flex-row download">
           <Button icon color="teal" onClick={this.showSVGCode}><Icon name="code" /></Button>

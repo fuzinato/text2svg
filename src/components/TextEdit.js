@@ -5,7 +5,7 @@ const TextEdit = (props) => {
     props.onChange(e.target.value)
   }
   return (
-    <div className="input-section input__edit">
+    <div className="input-section section-edit flex-row-2">
       <span>Text</span>
       <input
         type="text"
