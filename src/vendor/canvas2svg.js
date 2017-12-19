@@ -10,7 +10,7 @@
  *
  *  Copyright (c) 2014 Gliffy Inc.
  */
-
+/*eslint-disable */
 ; (function () {
   "use strict";
 

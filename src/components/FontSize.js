@@ -8,7 +8,7 @@ const FontSize = (props) => {
   }
 
   return (
-    <div className="input-section b-font-size">
+    <div className="input-section">
       <span>Font Size</span>
       <input
         type="number"

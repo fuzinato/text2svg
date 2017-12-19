@@ -8,12 +8,13 @@ export default class Colorpicker extends Component {
 
     this.state = {
       isPickerVisible: false,
-      color: '#D700EA'
+      color: props.defaultValue || ''
     }
 
     this.showColorPicker = this.showColorPicker.bind(this)
     this.handleChange = this.handleChange.bind(this)
     this.handleKeyDown = this.handleKeyDown.bind(this)
+    this.closePanel = this.closePanel.bind(this)
   }
 
   handleChange(colorObj, event) {
@@ -32,15 +33,21 @@ export default class Colorpicker extends Component {
       this.setState({isPickerVisible: false})
     }
   }
+  closePanel(e){
+    console.log(e)
+    // this.setState({isPickerVisible: false})
+    // if(e.target !== this.)
+  }
 
   componentDidMount() {
-    console.log(this.state.color)
     this.props.onChange(this.state.color)
     document.addEventListener("keydown", this.handleKeyDown, false);
+    document.addEventListener("click", this.closePanel, false);
   }
 
   componentWillUnmount(){
     document.removeEventListener("keydown", this.handleKeyDown, false);
+    document.removeEventListener("click", this.closePanel, false);
   }
 
   render() {

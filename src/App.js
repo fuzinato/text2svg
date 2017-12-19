@@ -1,52 +1,67 @@
-import React, { Component } from 'react'
-import WebFont from 'webfontloader'
-import C2S from './vendor/canvas2svg'
+import React, { Component } from "react"
+import WebFont from "webfontloader"
+import C2S from "./vendor/canvas2svg"
 // Named Imports
-import { Button, Icon } from 'semantic-ui-react'
+import { Button, Icon } from "semantic-ui-react"
 import { debounce } from "./helpers";
-// COmponents
-import FontFamilySelect from './components/FontFamilySelect'
-import FontStyleSelect from './components/FontStyleSelect'
-import TextEdit from './components/TextEdit'
-import FontSize from './components/FontSize'
-import Colorpicker from './components/Colorpicker'
+// Components
+import FontFamilySelect from "./components/FontFamilySelect"
+import FontStyleSelect from "./components/FontStyleSelect"
+import TextEdit from "./components/TextEdit"
+import FontSize from "./components/FontSize"
+import Colorpicker from "./components/Colorpicker"
+import Dimensions from "./components/Dimensions"
 // CSS imports
-import 'semantic-ui-css/semantic.min.css'
-import './App.css';
+import "semantic-ui-css/semantic.min.css"
+import "./App.css";
 
 class App extends Component {
   constructor() {
     super()
     this.state = {
-      text: 'Hello World',
-      color: '',
-      fontFamily: 'Berkshire Swash',
-      variants: ['regular'],
-      fontVariant: 'regular',
-      fontStyle: 'normal',
+      text: "Hello World",
+      color: "",
+      bgcolor: "",
+      fontFamily: "Berkshire Swash",
+      variants: ["regular"],
+      fontVariant: "regular",
+      fontStyle: "normal",
       fontWeight: 400,
       fontSize: 48,
-      isPickerVisible: false
+      isPickerVisible: false,
+      canvasW: 500,
+      canvasH: 100,
+      textX: 100,
+      textY: 20
     }
 
     this._debounceTextChange = debounce(this._debounceTextChange, 400)
     this.handleTextChange = this.handleTextChange.bind(this)
     this.handleFontSizeChange = this.handleFontSizeChange.bind(this)
     this.handleColorChange = this.handleColorChange.bind(this)
+    this.handleBgColorChange = this.handleBgColorChange.bind(this)
     this.changeFont = this.changeFont.bind(this)
     this.changeStyle = this.changeStyle.bind(this)
     this.downloadSVGFile = this.downloadSVGFile.bind(this)
     this.showSVGCode = this.showSVGCode.bind(this)
+    this.handleDimensionChange = this.handleDimensionChange.bind(this)
   }
 
   // Private
   _renderCanvas() {
-    const { text, color, fontSize, fontFamily, fontStyle, fontWeight } = this.state;
-    const ctx = new C2S(1000, 200)
+    const { text, color, bgcolor, fontSize, fontFamily, fontStyle, fontWeight, canvasW, canvasH, textX, textY } = this.state;
+    const ctx = new C2S(canvasW, canvasH)
+    const fixtextY = parseInt(fontSize, 10) + parseInt(textY, 10)
+
+    if (bgcolor) {
+      ctx.rect(0, 0, canvasW, canvasH);
+      ctx.fillStyle = bgcolor;
+      ctx.fill();
+    }
 
     ctx.fillStyle = `${color}`
     ctx.font = `${fontStyle} normal ${fontWeight} ${fontSize}px ${fontFamily}`
-    ctx.fillText(`${text}`, 10, 100)
+    ctx.fillText(`${text}`, textX, fixtextY)
     // TODO add stroke
 
     var svg = ctx.getSvg()
@@ -54,8 +69,8 @@ class App extends Component {
   }
 
   // Binded
-  handleTextChange(e) {
-    this._debounceTextChange(e.target.value)
+  handleTextChange(val) {
+    this._debounceTextChange(val)
   }
 
   _debounceTextChange(text) {
@@ -64,6 +79,10 @@ class App extends Component {
 
   handleColorChange(color) {
     this.setState({ color })
+  }
+
+  handleBgColorChange(bgcolor) {
+    this.setState({ bgcolor })
   }
 
   handleFontSizeChange(fontSize) {
@@ -124,16 +143,26 @@ class App extends Component {
 
   renderSvg() {
     const svg = this._renderCanvas()
-    this.svgContainer.innerHTML = ''
+    this.svgContainer.innerHTML = ""
     this.svgContainer.appendChild(svg)
   }
 
   downloadSVGFile() {
-    console.log('call download')
+    console.log("call download")
   }
 
   showSVGCode() {
-    console.log('show showSVGCode')
+    console.log("show showSVGCode")
+  }
+
+  handleDimensionChange(obj) {
+    const canvasW = obj.canvasW || this.state.canvasW
+    const canvasH = obj.canvasH || this.state.canvasH
+    const textX = obj.textX || this.state.textX
+    const textY = obj.textY || this.state.textY
+    this.setState({
+      canvasW, canvasH, textX, textY
+    })
   }
 
   // Lifecycle hooks
@@ -148,25 +177,28 @@ class App extends Component {
   render() {
     return (
       <div className="app">
-        <div ref={(el) => { this.svgContainer = el }}></div>
+        <div className="svgContainer" ref={(el) => { this.svgContainer = el }}></div>
 
         <div className="flex-row">
           <TextEdit onChange={this.handleTextChange} text={this.state.text} />
-          <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
-          <Colorpicker onChange={this.handleColorChange} />
+          <Colorpicker onChange={this.handleColorChange} defaultValue="#D700EA" title="Text Color" />
+          <Colorpicker onChange={this.handleBgColorChange} title="Bg Color"/>
         </div>
         <div className="flex-row">
           <FontFamilySelect changeFont={this.changeFont} fontFamily={this.state.fontFamily} />
           <FontStyleSelect variants={this.state.variants} fontVariant={this.state.fontVariant} onChange={this.changeStyle} />
-
-          <div className="input-section section__download">
-            <Button icon color="teal" onClick={this.showSVGCode}><Icon name='code' /></Button>
-            <Button icon color="blue" onClick={this.downloadSVGFile} ><Icon name='download' /></Button>
-          </div>
+          <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
         </div>
-        <div className="flex-row">
-        {/* canvas: width, height
-        text-position: x, y */}
+        <div className="flex-row dimensions">
+          <Dimensions onChange={this.handleDimensionChange} title="Canvas Width" text={this.state.canvasW} measures="canvasW" />
+          <Dimensions onChange={this.handleDimensionChange} title="Canvas Height" text={this.state.canvasH} measures="canvasH" />
+          <Dimensions onChange={this.handleDimensionChange} title="Text X Position" text={this.state.textX} measures="textX" />
+          <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.textY} measures="textY" />
+        </div>
+        <div className="flex-row download">
+          <Button icon color="teal" onClick={this.showSVGCode}><Icon name="code" /></Button>
+          <Button icon color="blue" onClick={this.downloadSVGFile} ><Icon name="download" /></Button>
+
         </div>
         <Button icon="github" />
         <Button icon="twitter" />
