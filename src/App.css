@@ -59,7 +59,11 @@ select {
   cursor: pointer;
 }
 
-
+.colorblock.is-empty::after{
+  content: "X";
+  color:red;
+  font-weight: bold;
+}
 
 .flex-row {
   display: flex;
