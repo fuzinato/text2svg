@@ -11,8 +11,8 @@ import TextEdit from "./components/TextEdit"
 import FontSize from "./components/FontSize"
 import Colorpicker from "./components/Colorpicker"
 import Dimensions from "./components/Dimensions"
+import Credits from './components/Credits'
 // CSS imports
-import "semantic-ui-css/semantic.min.css"
 import "./App.css";
 
 class App extends Component {
@@ -213,10 +213,7 @@ class App extends Component {
           <Button icon color="blue" onClick={this.downloadSVGFile} ><Icon name="download" /></Button>
 
         </div>
-        <Button icon="github" />
-        <Button icon="twitter" />
-        <Button icon="share alternate" color="pink" />
-
+        <Credits />
       </div>
     );
   }
