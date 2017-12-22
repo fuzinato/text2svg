@@ -1,5 +1,6 @@
 import React from "react"
 import "whatwg-fetch"
+import Wrapper from './Wrapper';
 
 class FontFamilySelect extends React.Component {
   constructor() {
@@ -50,12 +51,11 @@ class FontFamilySelect extends React.Component {
     }
 
     return (
-      <div className="input-section family-select">
-        <span>Font Family</span>
+      <Wrapper title="Font Family" plusClass="family-select">
         <select onChange={this.handleChange.bind(this)} value={this.props.fontFamily}>
           {this.familyList.map((item) => <option key={item.value} value={item.value}>{item.value}</option>)}
         </select>
-      </div>
+      </Wrapper>
     )
   }
 }

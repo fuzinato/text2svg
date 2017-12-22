@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ChromePicker } from 'react-color'
+import Wrapper from './Wrapper';
 
 
 export default class Colorpicker extends Component {
@@ -28,12 +29,12 @@ export default class Colorpicker extends Component {
     this.setState({ isPickerVisible })
   }
 
-  handleKeyDown(e){
-    if(e.keyCode === 27) {
-      this.setState({isPickerVisible: false})
+  handleKeyDown(e) {
+    if (e.keyCode === 27) {
+      this.setState({ isPickerVisible: false })
     }
   }
-  closePanel(e){
+  closePanel(e) {
     console.log(e)
     // this.setState({isPickerVisible: false})
     // if(e.target !== this.)
@@ -45,21 +46,20 @@ export default class Colorpicker extends Component {
     document.addEventListener("click", this.closePanel, false);
   }
 
-  componentWillUnmount(){
+  componentWillUnmount() {
     document.removeEventListener("keydown", this.handleKeyDown, false);
     document.removeEventListener("click", this.closePanel, false);
   }
 
   render() {
     return (
-      <div className="input-section">
+      <Wrapper title={this.props.title}>
         <ChromePicker
           color={this.state.color}
           className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}
-          onChangeComplete={this.handleChange}  />
-        <span>{this.props.title}</span>
-        <div style={{backgroundColor: this.state.color}} className="colorblock" onClick={this.showColorPicker} ></div>
-      </div>
+          onChangeComplete={this.handleChange} />
+        <div style={{ backgroundColor: this.state.color }} className="colorblock" onClick={this.showColorPicker} ></div>
+      </Wrapper>
     )
   }
 }

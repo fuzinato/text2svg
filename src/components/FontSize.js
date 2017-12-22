@@ -1,4 +1,5 @@
 import React from 'react'
+import Wrapper from './Wrapper'
 
 const FontSize = (props) => {
 
@@ -8,14 +9,13 @@ const FontSize = (props) => {
   }
 
   return (
-    <div className="input-section">
-      <span>Font Size</span>
+    <Wrapper title="Font Size" >
       <input
         type="number"
         placeholder='Font Size'
         defaultValue={props.fontSize}
         onChange={handleChange} />
-    </div>
+    </Wrapper>
   )
 }
 

@@ -1,4 +1,5 @@
 import React from 'react'
+import Wrapper from './Wrapper';
 
 const Dimensions = (props) => {
   function handleChange(e) {
@@ -8,14 +9,13 @@ const Dimensions = (props) => {
     props.onChange(state)
   }
   return (
-    <div className="input-section">
-      <span>{props.title}</span>
+    <Wrapper title={props.title}>
       <input
         type="number"
         placeholder={props.title}
         defaultValue={props.text}
         onChange={handleChange} />
-    </div>
+    </Wrapper>
   )
 }
 
