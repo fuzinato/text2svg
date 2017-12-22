@@ -1,5 +1,6 @@
 import React, { Component } from 'react'
 import { ChromePicker } from 'react-color'
+import { findAncestor } from "../helpers";
 import Wrapper from './Wrapper';
 
 
@@ -34,10 +35,12 @@ export default class Colorpicker extends Component {
       this.setState({ isPickerVisible: false })
     }
   }
+
   closePanel(e) {
-    console.log(e)
-    // this.setState({isPickerVisible: false})
-    // if(e.target !== this.)
+    const parent = findAncestor(e.target, "colorpicker")
+    if(!parent) {
+      this.setState({isPickerVisible: false})
+    }
   }
 
   componentDidMount() {
@@ -53,7 +56,7 @@ export default class Colorpicker extends Component {
 
   render() {
     return (
-      <Wrapper title={this.props.title}>
+      <Wrapper title={this.props.title} plusClass="colorpicker">
         <ChromePicker
           color={this.state.color}
           className={this.state.isPickerVisible ? "is-visible" : "is-hidden"}

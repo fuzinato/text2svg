@@ -1,8 +1,10 @@
+/*eslint-disable */
+
 export function debounce(func, wait, immediate) {
 	var timeout;
-	return function() {
+	return function () {
 		var context = this, args = arguments;
-		var later = function() {
+		var later = function () {
 			timeout = null;
 			if (!immediate) func.apply(context, args);
 		};
@@ -12,3 +14,8 @@ export function debounce(func, wait, immediate) {
 		if (callNow) func.apply(context, args);
 	};
 };
+
+export function findAncestor(el, cls) {
+	while ((el = el.parentElement) && !el.classList.contains(cls));
+	return el;
+}
