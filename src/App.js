@@ -12,6 +12,7 @@ import FontSize from "./components/FontSize"
 import Colorpicker from "./components/Colorpicker"
 import Dimensions from "./components/Dimensions"
 import Credits from './components/Credits'
+import DownloadCode from './components/DownloadCode'
 // CSS imports
 import "./App.css";
 
@@ -197,7 +198,7 @@ class App extends Component {
             <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
           </div>
         </div>
-        <div className="flex-row dimensions">
+        <div className="flex-row">
           <div className="flex-row-2">
             <Dimensions onChange={this.handleDimensionChange} title="Canvas Width" text={this.state.canvasW} measures="canvasW" />
             <Dimensions onChange={this.handleDimensionChange} title="Canvas Height" text={this.state.canvasH} measures="canvasH" />
@@ -208,10 +209,8 @@ class App extends Component {
             <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.textY} measures="textY" />
           </div>
         </div>
-        <div className="flex-row download">
-          <Button icon color="teal" onClick={this.showSVGCode}><Icon name="code" /></Button>
-          <Button icon color="blue" onClick={this.downloadSVGFile} ><Icon name="download" /></Button>
-
+        <div className="flex-row section__download">
+          <DownloadCode />
         </div>
         <Credits />
       </div>

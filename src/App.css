@@ -10,7 +10,7 @@ html, body {
   min-height: 100vh;
   width: 620px;
   padding-bottom: 100px;
-  -sizing: border-;
+  box-sizing: border-box;
 }
 
 .svgContainer {
@@ -43,6 +43,7 @@ input {
   border-radius: 0;
   border-bottom: 1px solid #BCC6DA;
   width: 100%;
+  box-sizing: border-box;
 }
 
 select {
@@ -53,8 +54,9 @@ select {
   padding: 10px 0;
   font-size: 16px;
   width: 100%;
+  box-sizing: border-box;
   -moz-appearance:none;
-  -webkit-appearance: none
+  -webkit-appearance: none;
 }
 
 .selectContainer {
@@ -127,9 +129,7 @@ select {
 } */
 
 .section__download {
-  display: flex;
-  flex-direction: row;
-  align-items: flex-end
+  justify-content: center;
 }
 /* GRID */
 
