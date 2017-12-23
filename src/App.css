@@ -59,6 +59,38 @@ select {
   -webkit-appearance: none;
 }
 
+.btn {
+  border: none;
+  background: none;
+  cursor: pointer;
+  padding: 15px 20px;
+  display: flex;
+  align-items: center;
+  margin: 15px;
+  text-transform: uppercase;
+  letter-spacing: 1px;
+  font-weight: 700;
+  outline: none;
+  position: relative;
+  transition: all 0.3s;
+}
+
+.btn img{
+  margin-right: 10px;
+}
+
+.btn__code {
+  background-color: #d9f7be;
+}
+.btn__code:hover{
+  background-color: #b7eb8f;
+}
+.btn__download {
+  background-color: #bae7ff;
+}
+.btn__download:hover{
+  background-color: #91d5ff;
+}
 .selectContainer {
   position: relative;
   width: 100%;

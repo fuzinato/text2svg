@@ -204,14 +204,11 @@ class App extends Component {
             <Dimensions onChange={this.handleDimensionChange} title="Canvas Height" text={this.state.canvasH} measures="canvasH" />
           </div>
           <div className="flex-row-2">
-
             <Dimensions onChange={this.handleDimensionChange} title="Text X Position" text={this.state.textX} measures="textX" />
             <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.textY} measures="textY" />
           </div>
         </div>
-        <div className="flex-row section__download">
-          <DownloadCode />
-        </div>
+        <DownloadCode />
         <Credits />
       </div>
     );
