@@ -25,7 +25,8 @@ class FontFamilySelect extends React.Component {
           return {
             text: font.family,
             value: font.family,
-            variants: font.variants
+            variants: font.variants,
+            files: font.files
           }
         });
 
@@ -41,7 +42,13 @@ class FontFamilySelect extends React.Component {
   handleChange(e) {
     const selectedfontFamily = e.target.value;
     const variants = this.familyList[e.target.selectedIndex].variants
-    this.props.changeFont(selectedfontFamily, variants)
+    const files = this.familyList[e.target.selectedIndex].files
+    this.props.changeFont(selectedfontFamily, variants, files)
+  }
+
+  componentDidMount() {
+    // console.log(this.selectEl)
+    // this.selectel.onchange();
   }
 
   render() {
@@ -52,7 +59,7 @@ class FontFamilySelect extends React.Component {
     return (
       <Wrapper title="Font Family" plusClass="family-select">
         <div className="selectContainer">
-          <select onChange={this.handleChange.bind(this)} value={this.props.fontFamily}>
+          <select ref={(input) => { this.selectEl = input; }} onChange={this.handleChange.bind(this)} value={this.props.fontFamily}>
             {this.familyList.map((item) => <option key={item.value} value={item.value}>{item.value}</option>)}
           </select>
         </div>

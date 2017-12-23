@@ -24,15 +24,17 @@ class App extends Component {
       bgcolor: "",
       fontFamily: "Berkshire Swash",
       variants: ["regular"],
+      files: {},
+      fontUrl: "",
       fontVariant: "regular",
       fontStyle: "normal",
       fontWeight: 400,
       fontSize: 48,
       isPickerVisible: false,
-      canvasW: 500,
-      canvasH: 100,
-      textX: 100,
-      textY: 20
+      width: 500,
+      height: 100,
+      x: 100,
+      y: 20
     }
 
     this._debounceTextChange = debounce(this._debounceTextChange, 400)
@@ -41,7 +43,7 @@ class App extends Component {
     this.handleColorChange = this.handleColorChange.bind(this)
     this.handleBgColorChange = this.handleBgColorChange.bind(this)
     this.changeFont = this.changeFont.bind(this)
-    this.changeStyle = this.changeStyle.bind(this)
+    this.changeVariant = this.changeVariant.bind(this)
     this.downloadSVGFile = this.downloadSVGFile.bind(this)
     this.showSVGCode = this.showSVGCode.bind(this)
     this.handleDimensionChange = this.handleDimensionChange.bind(this)
@@ -49,19 +51,19 @@ class App extends Component {
 
   // Private
   _renderCanvas() {
-    const { text, color, bgcolor, fontSize, fontFamily, fontStyle, fontWeight, canvasW, canvasH, textX, textY } = this.state;
-    const ctx = new C2S(canvasW, canvasH)
-    const fixtextY = parseInt(fontSize, 10) + parseInt(textY, 10)
+    const { text, color, bgcolor, fontSize, fontFamily, fontStyle, fontWeight, width, height, x, y } = this.state;
+    const ctx = new C2S(width, height)
+    const fixtextY = parseInt(fontSize, 10) + parseInt(y, 10)
 
     if (bgcolor) {
-      ctx.rect(0, 0, canvasW, canvasH);
+      ctx.rect(0, 0, width, height);
       ctx.fillStyle = bgcolor;
       ctx.fill();
     }
 
     ctx.fillStyle = `${color}`
     ctx.font = `${fontStyle} normal ${fontWeight} ${fontSize}px ${fontFamily}`
-    ctx.fillText(`${text}`, textX, fixtextY)
+    ctx.fillText(`${text}`, x, fixtextY)
     // TODO add stroke
 
     var svg = ctx.getSvg()
@@ -89,7 +91,11 @@ class App extends Component {
     this.setState({ fontSize })
   }
 
-  changeFont(fontFamily, variants) {
+  changeFont(fontFamily, variants, files) {
+    console.log(fontFamily, variants, files)
+    if (!fontFamily || !variants || !files) {
+      return;
+    }
     WebFont.load({
       google: {
         families: [fontFamily]
@@ -103,7 +109,9 @@ class App extends Component {
     this.setState({
       fontVariant: "regular",
       fontStyle: "normal",
-      fontWeight: 400
+      fontWeight: 400,
+      fontUrl: files["regular"],
+      files
     })
   }
 
@@ -131,14 +139,15 @@ class App extends Component {
     return fvd
   }
 
-  changeStyle(fontVariant) {
+  changeVariant(fontVariant) {
     const fvd = this.getFVD(fontVariant)
     WebFont.load({
       google: {
         families: [`${this.state.fontFamily}:${fvd}`]
       }
     });
-    this.setState({ fontVariant })
+    const fontUrl = this.state.files[fontVariant]
+    this.setState({ fontVariant, fontUrl })
   }
 
   renderSvg() {
@@ -147,39 +156,42 @@ class App extends Component {
     this.svgContainer.appendChild(svg)
   }
 
-  getQueryString(endpoint){
-    const dataOutput = this.state;
+  getQueryString(endpoint) {
+    const stateData = this.state;
+    console.log(stateData)
     let queryString = "";
-    for (let dataKey in dataOutput) {
-      console.log(dataKey, dataOutput[dataKey])
-      const value = dataOutput[dataKey];
+    for (let dataKey in stateData) {
+      console.log(dataKey, stateData[dataKey])
+      const value = stateData[dataKey];
       queryString += ((queryString.length ? "&" : "") + dataKey + "=" + encodeURIComponent(value));
     }
+    console.log(queryString)
     return `http://localhost:8080/${endpoint}?${queryString}`;
   }
   downloadSVGFile() {
 
     const queryString = this.getQueryString("download")
-    window.open(queryString)
+    // window.open(queryString)
   }
 
   showSVGCode() {
     const queryString = this.getQueryString("code")
-    window.open(queryString)
+    // window.open(queryString)
   }
 
   handleDimensionChange(obj) {
-    const canvasW = obj.canvasW || this.state.canvasW
-    const canvasH = obj.canvasH || this.state.canvasH
-    const textX = obj.textX || this.state.textX
-    const textY = obj.textY || this.state.textY
+    const width = obj.width || this.state.width
+    const height = obj.height || this.state.height
+    const x = obj.x || this.state.x
+    const y = obj.y || this.state.y
     this.setState({
-      canvasW, canvasH, textX, textY
+      width, height, x, y
     })
   }
 
   // Lifecycle hooks
   componentDidUpdate() {
+    this.changeFont()
     this.renderSvg();
   }
 
@@ -193,12 +205,12 @@ class App extends Component {
         <div className="svgContainer" ref={(el) => { this.svgContainer = el }}></div>
 
         <div className="flex-row">
-          <div className="flex-row-2">
+          <div className="flex-row-3">
             <TextEdit onChange={this.handleTextChange} text={this.state.text} />
           </div>
-          <div className="flex-row-2">
+          <div className="flex-row-1">
             <Colorpicker onChange={this.handleColorChange} title="Color" defaultValue="#D700EA" />
-            <Colorpicker onChange={this.handleBgColorChange} title="Bg Color" />
+            {/* <Colorpicker onChange={this.handleBgColorChange} title="Bg Color" /*/}
           </div>
         </div>
         <div className="flex-row">
@@ -206,18 +218,18 @@ class App extends Component {
             <FontFamilySelect changeFont={this.changeFont} fontFamily={this.state.fontFamily} />
           </div>
           <div className="flex-row-2">
-            <FontStyleSelect variants={this.state.variants} fontVariant={this.state.fontVariant} onChange={this.changeStyle} />
+            <FontStyleSelect variants={this.state.variants} fontVariant={this.state.fontVariant} onChange={this.changeVariant} />
             <FontSize onChange={this.handleFontSizeChange} fontSize={this.state.fontSize} />
           </div>
         </div>
         <div className="flex-row">
           <div className="flex-row-2">
-            <Dimensions onChange={this.handleDimensionChange} title="Canvas Width" text={this.state.canvasW} measures="canvasW" />
-            <Dimensions onChange={this.handleDimensionChange} title="Canvas Height" text={this.state.canvasH} measures="canvasH" />
+            <Dimensions onChange={this.handleDimensionChange} title="Canvas Width" text={this.state.width} measures="width" />
+            <Dimensions onChange={this.handleDimensionChange} title="Canvas Height" text={this.state.height} measures="height" />
           </div>
           <div className="flex-row-2">
-            <Dimensions onChange={this.handleDimensionChange} title="Text X Position" text={this.state.textX} measures="textX" />
-            <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.textY} measures="textY" />
+            <Dimensions onChange={this.handleDimensionChange} title="Text X Position" text={this.state.x} measures="x" />
+            <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.y} measures="y" />
           </div>
         </div>
         <DownloadCode showSVGCode={this.showSVGCode} downloadSVGFile={this.downloadSVGFile} />
