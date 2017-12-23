@@ -20,12 +20,12 @@ class App extends Component {
     super()
     this.state = {
       text: "Hello World",
-      color: "",
+      fill: "",
       bgcolor: "",
       fontFamily: "Berkshire Swash",
       variants: ["regular"],
       files: {},
-      fontUrl: "",
+      fontUrl: "http://fonts.gstatic.com/s/berkshireswash/v6/4RZJjVRPjYnC2939hKCAimKfbtsIjCZP_edQljX9gR0.ttf",
       fontVariant: "regular",
       fontStyle: "normal",
       fontWeight: 400,
@@ -51,7 +51,7 @@ class App extends Component {
 
   // Private
   _renderCanvas() {
-    const { text, color, bgcolor, fontSize, fontFamily, fontStyle, fontWeight, width, height, x, y } = this.state;
+    const { text, fill, bgcolor, fontSize, fontFamily, fontStyle, fontWeight, width, height, x, y } = this.state;
     const ctx = new C2S(width, height)
     const fixtextY = parseInt(fontSize, 10) + parseInt(y, 10)
 
@@ -61,7 +61,7 @@ class App extends Component {
       ctx.fill();
     }
 
-    ctx.fillStyle = `${color}`
+    ctx.fillStyle = `${fill}`
     ctx.font = `${fontStyle} normal ${fontWeight} ${fontSize}px ${fontFamily}`
     ctx.fillText(`${text}`, x, fixtextY)
     // TODO add stroke
@@ -79,8 +79,8 @@ class App extends Component {
     this.setState({ text })
   }
 
-  handleColorChange(color) {
-    this.setState({ color })
+  handleColorChange(fill) {
+    this.setState({ fill })
   }
 
   handleBgColorChange(bgcolor) {
@@ -96,6 +96,7 @@ class App extends Component {
     if (!fontFamily || !variants || !files) {
       return;
     }
+
     WebFont.load({
       google: {
         families: [fontFamily]
@@ -165,18 +166,17 @@ class App extends Component {
       const value = stateData[dataKey];
       queryString += ((queryString.length ? "&" : "") + dataKey + "=" + encodeURIComponent(value));
     }
-    console.log(queryString)
-    return `http://localhost:8080/${endpoint}?${queryString}`;
+    return `http://text2svg.herokuapp.com/${endpoint}?${queryString}`;
   }
   downloadSVGFile() {
 
     const queryString = this.getQueryString("download")
-    // window.open(queryString)
+    window.open(queryString)
   }
 
   showSVGCode() {
     const queryString = this.getQueryString("code")
-    // window.open(queryString)
+    window.open(queryString)
   }
 
   handleDimensionChange(obj) {
