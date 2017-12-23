@@ -209,7 +209,7 @@ class App extends Component {
             <TextEdit onChange={this.handleTextChange} text={this.state.text} />
           </div>
           <div className="flex-row-1">
-            <Colorpicker onChange={this.handleColorChange} title="Color" defaultValue="#D700EA" />
+            <Colorpicker onChange={this.handleColorChange} title="Color" defaultValue="#fa541c" />
             {/* <Colorpicker onChange={this.handleBgColorChange} title="Bg Color" /*/}
           </div>
         </div>
