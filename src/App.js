@@ -2,7 +2,6 @@ import React, { Component } from "react"
 import WebFont from "webfontloader"
 import C2S from "./vendor/canvas2svg"
 // Named Imports
-import { Button, Icon } from "semantic-ui-react"
 import { debounce } from "./helpers";
 // Components
 import FontFamilySelect from "./components/FontFamilySelect"
@@ -148,12 +147,25 @@ class App extends Component {
     this.svgContainer.appendChild(svg)
   }
 
+  getQueryString(endpoint){
+    const dataOutput = this.state;
+    let queryString = "";
+    for (let dataKey in dataOutput) {
+      console.log(dataKey, dataOutput[dataKey])
+      const value = dataOutput[dataKey];
+      queryString += ((queryString.length ? "&" : "") + dataKey + "=" + encodeURIComponent(value));
+    }
+    return `http://localhost:8080/${endpoint}?${queryString}`;
+  }
   downloadSVGFile() {
-    console.log("call download")
+
+    const queryString = this.getQueryString("download")
+    window.open(queryString)
   }
 
   showSVGCode() {
-    console.log("show showSVGCode")
+    const queryString = this.getQueryString("code")
+    window.open(queryString)
   }
 
   handleDimensionChange(obj) {
@@ -208,7 +220,7 @@ class App extends Component {
             <Dimensions onChange={this.handleDimensionChange} title="Text Y Position" text={this.state.textY} measures="textY" />
           </div>
         </div>
-        <DownloadCode />
+        <DownloadCode showSVGCode={this.showSVGCode} downloadSVGFile={this.downloadSVGFile} />
         <Credits />
       </div>
     );
