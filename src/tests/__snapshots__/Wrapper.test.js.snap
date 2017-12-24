@@ -1,0 +1,12 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Wrapper  should have correct shapshot 1`] = `
+<div
+  className="input-section some-dditional-class"
+>
+  <span>
+    Some Dummy Title
+  </span>
+  Testing Wrapper
+</div>
+`;

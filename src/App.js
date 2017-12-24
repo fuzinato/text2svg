@@ -92,7 +92,6 @@ class App extends Component {
   }
 
   changeFont(fontFamily, variants, files) {
-    console.log(fontFamily, variants, files)
     if (!fontFamily || !variants || !files) {
       return;
     }
@@ -200,7 +199,7 @@ class App extends Component {
   }
 
   render() {
-    return (
+  return (
       <div className="app">
         <div className="svgContainer" ref={(el) => { this.svgContainer = el }}></div>
 

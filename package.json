@@ -17,8 +17,13 @@
     "test": "react-scripts test --env=jsdom",
     "eject": "react-scripts eject"
   },
-  "homepage" : "http://text2svg.online",
+  "homepage": "http://text2svg.online",
   "eslintIgnore": [
     "/src/vendor/*.js"
-  ]
+  ],
+  "devDependencies": {
+    "enzyme": "^3.2.0",
+    "enzyme-adapter-react-16": "^1.1.1",
+    "react-test-renderer": "^16.2.0"
+  }
 }

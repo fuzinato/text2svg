@@ -1,0 +1,17 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`Dimensions  should have correct shapshot 1`] = `
+<div
+  className="input-section undefined"
+>
+  <span>
+    Dummy Title
+  </span>
+  <input
+    defaultValue={51}
+    onChange={[Function]}
+    placeholder="Dummy Title"
+    type="number"
+  />
+</div>
+`;

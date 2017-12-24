@@ -46,11 +46,6 @@ class FontFamilySelect extends React.Component {
     this.props.changeFont(selectedfontFamily, variants, files)
   }
 
-  componentDidMount() {
-    // console.log(this.selectEl)
-    // this.selectel.onchange();
-  }
-
   render() {
     if (this.state.loading) {
       return null

@@ -1,12 +1,18 @@
 import React from 'react'
+import { string} from 'prop-types';
 
-const Wrapper = (props) => {
+const Wrapper = ({title, plusClass, children}) => {
   return (
-    <div className={`input-section ${props.plusClass}`}>
-      <span>{props.title}</span>
-      {props.children}
+    <div className={`input-section ${plusClass}`}>
+      <span>{title}</span>
+      {children}
     </div>
   )
 }
+
+Wrapper.propTypes = {
+  title: string.isRequired,
+  plusClass: string,
+};
 
 export default Wrapper
