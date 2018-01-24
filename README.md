@@ -1,10 +1,12 @@
-# text2svg Webapp [https://text2svg.online](https://text2svg.online)
+# text2svg webapp
 
+[https://text2svg.online](https://text2svg.online)
+ 
 ![text2svg.online](screenshot.png)
 
 ## Installation
 ```bash
-$ npm i
+$ npm install
 ```
 ## Running locally
 ```bash
